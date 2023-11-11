@@ -42,6 +42,7 @@ export const HomePage = () => {
           {' '}
           <JourneyDetail journey={journey.results} />{' '}
           <SeatPicker
+            selectedSeat={journey.results.autoSeat}
             seats={journey.results.seats}
             journeyId={journey.results.journeyId}
           />

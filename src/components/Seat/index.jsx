@@ -1,11 +1,15 @@
 import './style.css';
 
-export const Seat = ({ number, isOccupied }) => {
+export const Seat = ({ number, isOccupied, isSelected }) => {
+  let seatClass = 'seat';
+  if (isSelected) {
+    seatClass = 'seat seat--auto seat--selected';
+  } else {
+    seatClass = 'seat seat--auto';
+  }
   return (
     <svg
-      className={
-        isOccupied ? 'seat seat--auto seat--occupied' : 'seat seat--auto'
-      }
+      className={isOccupied ? 'seat seat--auto seat--occupied' : seatClass}
       viewBox="0 0 100 100"
       role="button"
     >
