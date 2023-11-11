@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider, Link } from 'react-router-dom';
 import { App } from './components/App';
 import './global.css';
 import { HomePage } from './pages/HomePage';
+import { ReservationPage } from './components/ReservationPage';
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
       {
         path: '',
         element: <HomePage />,
+      },
+      {
+        path: 'reservation',
+        element: <ReservationPage />,
       },
     ],
   },
