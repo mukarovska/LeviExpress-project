@@ -1,10 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import './style.css';
 
+const CityOptions = ({ cities }) => {
+  return (
+    <>
+      <option value={''}>Vyberte</option>
+      {cities.map((city) => (
+        <option key={city.code} value={city.code}>
+          {city.name}
+        </option>
+      ))}
+    </>
+  );
+};
+
 export const JourneyPicker = ({ onJourneyChange }) => {
   const [fromCity, setFromCity] = useState('');
   const [toCity, setToCity] = useState('');
   const [date, setDate] = useState('');
+  const [cities, setCities] = useState([]);
+
+  useEffect(() => {
+    const handleFetch = async () => {
+      const response = await fetch(
+        'https://apps.kodim.cz/daweb/leviexpress/api/cities',
+      );
+      const data = await response.json();
+      setCities(data.results);
+    };
+    handleFetch();
+    console.log('useEffect');
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -27,12 +53,7 @@ export const JourneyPicker = ({ onJourneyChange }) => {
                 setFromCity(e.target.value);
               }}
             >
-              <option value="">Vyberte</option>
-              <option value="mesto01">Město 01</option>
-              <option value="mesto02">Město 02</option>
-              <option value="mesto03">Město 03</option>
-              <option value="mesto04">Město 04</option>
-              <option value="mesto05">Město 05</option>
+              <CityOptions cities={cities} />
             </select>
           </label>
           <label>
@@ -43,12 +64,7 @@ export const JourneyPicker = ({ onJourneyChange }) => {
                 setToCity(e.target.value);
               }}
             >
-              <option value="">Vyberte</option>
-              <option value="mesto01">Město 01</option>
-              <option value="mesto02">Město 02</option>
-              <option value="mesto03">Město 03</option>
-              <option value="mesto04">Město 04</option>
-              <option value="mesto05">Město 05</option>
+              <CityOptions cities={cities} />
             </select>
           </label>
           <label>
