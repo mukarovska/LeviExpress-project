@@ -1,4 +1,5 @@
 import { BusStop } from '../BusStop';
+import { SelectedSeat } from '../SelectedSeat';
 import './style.css';
 
 export const JourneyDetail = ({ journey }) => {
