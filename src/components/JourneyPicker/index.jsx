@@ -6,10 +6,25 @@ const CityOptions = ({ cities }) => {
     <>
       <option value={''}>Vyberte</option>
       {cities.map((city) => (
-        <option key={city.code} value={city.code}>
+        <option key={city.code} value={city.name}>
           {city.name}
         </option>
       ))}
+    </>
+  );
+};
+
+const DatesOptions = ({ dates }) => {
+  return (
+    <>
+      <option value="">Vyberte</option>
+      {dates.map((date) => {
+        return (
+          <option key={date.dateBasic} value={date.dateCs}>
+            {date.dateCs}
+          </option>
+        );
+      })}
     </>
   );
 };
@@ -19,14 +34,21 @@ export const JourneyPicker = ({ onJourneyChange }) => {
   const [toCity, setToCity] = useState('');
   const [date, setDate] = useState('');
   const [cities, setCities] = useState([]);
+  const [dates, setDates] = useState([]);
 
   useEffect(() => {
     const handleFetch = async () => {
-      const response = await fetch(
+      const responseCity = await fetch(
         'https://apps.kodim.cz/daweb/leviexpress/api/cities',
       );
-      const data = await response.json();
-      setCities(data.results);
+      const dataCity = await responseCity.json();
+      setCities(dataCity.results);
+
+      const responseDate = await fetch(
+        'https://apps.kodim.cz/daweb/leviexpress/api/dates',
+      );
+      const dataDates = await responseDate.json();
+      setDates(dataDates.results);
     };
     handleFetch();
     console.log('useEffect');
@@ -75,12 +97,7 @@ export const JourneyPicker = ({ onJourneyChange }) => {
                 setDate(e.target.value);
               }}
             >
-              <option value="">Vyberte</option>
-              <option value="datum01">Datum 01</option>
-              <option value="datum02">Datum 02</option>
-              <option value="datum03">Datum 03</option>
-              <option value="datum04">Datum 04</option>
-              <option value="datum05">Datum 05</option>
+              <DatesOptions dates={dates} />
             </select>
           </label>
           <div className="journey-picker__controls">
